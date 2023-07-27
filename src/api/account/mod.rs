@@ -1,3 +1,6 @@
+mod methods;
+pub use methods::*;
+
 pub struct User {
     pub id: usize,
     pub first_name: String,
