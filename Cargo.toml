@@ -1,0 +1,18 @@
+[package]
+name = "vkontakte_api"
+version = "0.0.1"
+edition = "2021"
+authors = ["Dmitriy Mayorov <MayorDi@yandex.ru>"]
+homepage = "https://github.com/MayorDi/vkontakte_api"
+repository = "https://github.com/MayorDi/vkontakte_api"
+readme = "./README.md"
+license = "Apache-2.0"
+keywords = ["vkontakte", "vk", "api"]
+categories = ["web", "api", "vk"]
+publish = true
+
+[dependencies]
+json = "0.12.4"
+log = "0.4.19"
+syn = "2.0.27"
+quote = "1.0.32"
