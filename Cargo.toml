@@ -1,7 +1,7 @@
 [package]
 name = "vkontakte_api"
 description = "Библиотека для работы с API VK (VKontakte)"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 authors = ["Dmitriy Mayorov <MayorDi@yandex.ru>"]
 homepage = "https://github.com/MayorDi/vkontakte_api"
