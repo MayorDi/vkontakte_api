@@ -5,12 +5,14 @@
 ## Goals
 - [ ] Implements the `Account`
 - - [ ] Implements all `methods` of `Account`
+- - - [x] Impl fn ban
+- - - [ ] Impl fn change_password
 - - - [ ] Impl fn get_active_offers
-- - - [ ] Impl fn get_app_permissions
+- - - [x] Impl fn get_app_permissions
 - - - [x] Impl fn get_banned
-- - - [ ] Impl fn get_counters
-- - - [ ] Impl fn get_info
-- - - [ ] Impl fn get_profile_info
+- - - [x] Impl fn get_counters
+- - - [x] Impl fn get_info
+- - - [x] Impl fn get_profile_info
 - - - [ ] Impl fn get_push_settings
 - - - [ ] Impl fn lookup_contacts
 - - - [ ] Impl fn register_device
@@ -21,7 +23,7 @@
 - - - [ ] Impl fn set_online
 - - - [ ] Impl fn set_push_settings
 - - - [ ] Impl fn set_silence_mode
-- - - [ ] Impl fn unban
+- - - [x] Impl fn unban
 - - - [ ] Impl fn unregister_device
 
 
