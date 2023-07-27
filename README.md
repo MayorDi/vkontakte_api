@@ -7,7 +7,7 @@
 - - [ ] Implements all `methods` of `Account`
 - - - [ ] Impl fn get_active_offers
 - - - [ ] Impl fn get_app_permissions
-- - - [ ] Impl fn get_banned
+- - - [x] Impl fn get_banned
 - - - [ ] Impl fn get_counters
 - - - [ ] Impl fn get_info
 - - - [ ] Impl fn get_profile_info

@@ -1,5 +1,6 @@
 [package]
 name = "vkontakte_api"
+description = "Библиотека для работы с API VK (VKontakte)"
 version = "0.0.1"
 edition = "2021"
 authors = ["Dmitriy Mayorov <MayorDi@yandex.ru>"]
@@ -14,6 +15,4 @@ publish = true
 [dependencies]
 json = "0.12.4"
 log = "0.4.19"
-syn = "2.0.27"
-quote = "1.0.32"
-uriparse = "0.6.4"
+reqwest = { version = "0.11", features = ["blocking"] }
