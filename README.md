@@ -1,1 +1,126 @@
 # VKontakte API
+`vkontakte_api` - эта библиотека не является оффициальным продуктом _ВКонтакте_.<br>
+Эта библиотека создана для личного и, не очень, использования.
+
+## Goals
+- [ ] Implements the `Account`
+- - [ ] Implements all `methods` of `Account`
+- - - [ ] Impl fn get_active_offers
+- - - [ ] Impl fn get_app_permissions
+- - - [ ] Impl fn get_banned
+- - - [ ] Impl fn get_counters
+- - - [ ] Impl fn get_info
+- - - [ ] Impl fn get_profile_info
+- - - [ ] Impl fn get_push_settings
+- - - [ ] Impl fn lookup_contacts
+- - - [ ] Impl fn register_device
+- - - [ ] Impl fn save_profile_info
+- - - [ ] Impl fn set_info
+- - - [ ] Impl fn set_name_in_menu
+- - - [ ] Impl fn set_offline
+- - - [ ] Impl fn set_online
+- - - [ ] Impl fn set_push_settings
+- - - [ ] Impl fn set_silence_mode
+- - - [ ] Impl fn unban
+- - - [ ] Impl fn unregister_device
+
+
+- [ ] Implements the `Groups`
+- - [ ] Implements all `methods` of `Groups`
+- - - [ ] Impl fn add_address
+- - - [ ] Impl fn add_callback_server
+- - - [ ] Impl fn add_link
+- - - [ ] Impl fn approve_request
+- - - [ ] Impl fn ban
+- - - [ ] Impl fn create
+- - - [ ] Impl fn delete_address
+- - - [ ] Impl fn delete_callback_server
+- - - [ ] Impl fn delete_link
+- - - [ ] Impl fn disable_online
+- - - [ ] Impl fn edit
+- - - [ ] Impl fn edit_address
+- - - [ ] Impl fn edit_callback_server
+- - - [ ] Impl fn edit_link
+- - - [ ] Impl fn edit_manager
+- - - [ ] Impl fn edit_place
+- - - [ ] Impl fn enable_online
+- - - [ ] Impl fn get
+- - - [ ] Impl fn get_addresses
+- - - [ ] Impl fn get_banned
+- - - [ ] Impl fn get_by_id
+- - - [ ] Impl fn get_callback_confirmation_code
+- - - [ ] Impl fn get_callback_server_settings
+- - - [ ] Impl fn get_callback_servers
+- - - [ ] Impl fn get_callback_settings
+- - - [ ] Impl fn get_catalog
+- - - [ ] Impl fn get_catalog_info
+- - - [ ] Impl fn get_invited_users
+- - - [ ] Impl fn get_invites
+- - - [ ] Impl fn get_long_poll_server
+- - - [ ] Impl fn get_long_poll_settings
+- - - [ ] Impl fn get_members
+- - - [ ] Impl fn get_online_status
+- - - [ ] Impl fn get_requests
+- - - [ ] Impl fn get_settings
+- - - [ ] Impl fn get_tag_list
+- - - [ ] Impl fn get_token_permissions
+- - - [ ] Impl fn invite
+- - - [ ] Impl fn is_member
+- - - [ ] Impl fn join
+- - - [ ] Impl fn leave
+- - - [ ] Impl fn remove_user
+- - - [ ] Impl fn reorder_link
+- - - [ ] Impl fn search
+- - - [ ] Impl fn set_callback_settings
+- - - [ ] Impl fn set_long_poll_settings
+- - - [ ] Impl fn set_settings
+- - - [ ] Impl fn set_user_note
+- - - [ ] Impl fn tag_add
+- - - [ ] Impl fn tag_bind
+- - - [ ] Impl fn tag_delete
+- - - [ ] Impl fn tag_update
+- - - [ ] Impl fn toggle_market
+- - - [ ] Impl fn unban
+
+- [ ] Implements the `Ads`
+- [ ] Implements the `AppWidgets`
+- [ ] Implements the `Apps`
+- [ ] Implements the `Asr`
+- [ ] Implements the `Auth`
+- [ ] Implements the `Board`
+- [ ] Implements the `Bugtracker`
+- [ ] Implements the `Calls`
+- [ ] Implements the `Database`
+- [ ] Implements the `Docs`
+- [ ] Implements the `Donut`
+- [ ] Implements the `DownloadedGames`
+- [ ] Implements the `Fave`
+- [ ] Implements the `Friends`
+- [ ] Implements the `Gifts`
+- [ ] Implements the `LeadForms`
+- [ ] Implements the `Likes`
+- [ ] Implements the `Market`
+- [ ] Implements the `Messages`
+- [ ] Implements the `Newsfeed`
+- [ ] Implements the `Notes`
+- [ ] Implements the `Notifications`
+- [ ] Implements the `Orders`
+- [ ] Implements the `Pages`
+- [ ] Implements the `Photos`
+- [ ] Implements the `Places`
+- [ ] Implements the `Podcasts`
+- [ ] Implements the `Polls`
+- [ ] Implements the `PrettyCards`
+- [ ] Implements the `Search`
+- [ ] Implements the `Secure`
+- [ ] Implements the `Stats`
+- [ ] Implements the `Status`
+- [ ] Implements the `Storage`
+- [ ] Implements the `Store`
+- [ ] Implements the `Stories`
+- [ ] Implements the `Streaming`
+- [ ] Implements the `Users`
+- [ ] Implements the `Utils`
+- [ ] Implements the `Video`
+- [ ] Implements the `Wall`
+- [ ] Implements the `Widgets`
