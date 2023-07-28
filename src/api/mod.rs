@@ -1,4 +1,5 @@
 pub mod account;
+pub mod auth;
 pub mod groups;
 
 #[derive(Debug, Clone, Copy)]

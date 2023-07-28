@@ -701,7 +701,7 @@ pub async fn unregister_device(
     get_result_responce(req).await
 }
 
-async fn get_result_responce(req: String) -> Result<JsonValue, JsonValue>  {
+pub(crate) async fn get_result_responce(req: String) -> Result<JsonValue, JsonValue>  {
     let res = reqwest::get(req).await.expect("Could not get a response or form a request.");
     let txt = res.text().await.expect("Could not get the request text.");
     let obj = json::parse(&txt).expect("Could not convert to json");
