@@ -1,31 +1,10 @@
 # VKontakte API
 `vkontakte_api` - эта библиотека не является оффициальным продуктом _ВКонтакте_.<br>
-Эта библиотека создана для личного и, не очень, использования.
+Эта библиотека создана для личного, и не очень, использования.
 
 ## Goals
-- [ ] Implements the `Account`
-- - [ ] Implements all `methods` of `Account`
-- - - [x] Impl fn ban
-- - - [ ] Impl fn change_password
-- - - [ ] Impl fn get_active_offers
-- - - [x] Impl fn get_app_permissions
-- - - [x] Impl fn get_banned
-- - - [x] Impl fn get_counters
-- - - [x] Impl fn get_info
-- - - [x] Impl fn get_profile_info
-- - - [ ] Impl fn get_push_settings
-- - - [ ] Impl fn lookup_contacts
-- - - [ ] Impl fn register_device
-- - - [ ] Impl fn save_profile_info
-- - - [ ] Impl fn set_info
-- - - [ ] Impl fn set_name_in_menu
-- - - [ ] Impl fn set_offline
-- - - [ ] Impl fn set_online
-- - - [ ] Impl fn set_push_settings
-- - - [ ] Impl fn set_silence_mode
-- - - [x] Impl fn unban
-- - - [ ] Impl fn unregister_device
-
+- [x] Implements the `Account`
+- - [x] Implements all `methods` of `Account`
 
 - [ ] Implements the `Groups`
 - - [ ] Implements all `methods` of `Groups`
