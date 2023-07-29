@@ -3,105 +3,91 @@
 Эта библиотека создана для личного, и не очень, использования.
 
 ## Goals
-- [x] ~~Implements the `Account`~~
-- - [x] ~~Implements all `methods` of `Account`~~
-
+- [x] Implements the `Account
+- - [x] Implements all `methods` of `Account
 - [ ] Implements the `Groups`
 - - [ ] Implements all `methods` of `Groups`
-- - - [ ] Impl fn add_address
-- - - [ ] Impl fn add_callback_server
-- - - [ ] Impl fn add_link
-- - - [ ] Impl fn approve_request
-- - - [ ] Impl fn ban
-- - - [ ] Impl fn create
-- - - [ ] Impl fn delete_address
-- - - [ ] Impl fn delete_callback_server
-- - - [ ] Impl fn delete_link
-- - - [ ] Impl fn disable_online
-- - - [ ] Impl fn edit
-- - - [ ] Impl fn edit_address
-- - - [ ] Impl fn edit_callback_server
-- - - [ ] Impl fn edit_link
-- - - [ ] Impl fn edit_manager
-- - - [ ] Impl fn edit_place
-- - - [ ] Impl fn enable_online
-- - - [ ] Impl fn get
-- - - [ ] Impl fn get_addresses
-- - - [ ] Impl fn get_banned
-- - - [ ] Impl fn get_by_id
-- - - [ ] Impl fn get_callback_confirmation_code
-- - - [ ] Impl fn get_callback_server_settings
-- - - [ ] Impl fn get_callback_servers
-- - - [ ] Impl fn get_callback_settings
-- - - [ ] Impl fn get_catalog
-- - - [ ] Impl fn get_catalog_info
-- - - [ ] Impl fn get_invited_users
-- - - [ ] Impl fn get_invites
-- - - [ ] Impl fn get_long_poll_server
-- - - [ ] Impl fn get_long_poll_settings
-- - - [ ] Impl fn get_members
-- - - [ ] Impl fn get_online_status
-- - - [ ] Impl fn get_requests
-- - - [ ] Impl fn get_settings
-- - - [ ] Impl fn get_tag_list
-- - - [ ] Impl fn get_token_permissions
-- - - [ ] Impl fn invite
-- - - [ ] Impl fn is_member
-- - - [ ] Impl fn join
-- - - [ ] Impl fn leave
-- - - [ ] Impl fn remove_user
-- - - [ ] Impl fn reorder_link
-- - - [ ] Impl fn search
-- - - [ ] Impl fn set_callback_settings
-- - - [ ] Impl fn set_long_poll_settings
-- - - [ ] Impl fn set_settings
-- - - [ ] Impl fn set_user_note
-- - - [ ] Impl fn tag_add
-- - - [ ] Impl fn tag_bind
-- - - [ ] Impl fn tag_delete
-- - - [ ] Impl fn tag_update
-- - - [ ] Impl fn toggle_market
-- - - [ ] Impl fn unban
-
 - [ ] Implements the `Ads`
+- - [ ] Implements all `methods` of `Ads`
 - [ ] Implements the `AppWidgets`
+- - [ ] Implements all `methods` of `AppWidgets`
 - [ ] Implements the `Apps`
+- - [ ] Implements all `methods` of `Apps`
 - [ ] Implements the `Asr`
-- [x] ~~Implements the `Auth`~~
+- - [ ] Implements all `methods` of `Asr`
+- [x] Implements the `Auth
+- - [x] Implements all `methods` of `Auth`
 - [ ] Implements the `Board`
+- - [ ] Implements all `methods` of `Board`
 - [ ] Implements the `Bugtracker`
+- - [ ] Implements all `methods` of `Bugtracker`
 - [ ] Implements the `Calls`
+- - [ ] Implements all `methods` of `Calls`
 - [ ] Implements the `Database`
+- - [ ] Implements all `methods` of `Database`
 - [ ] Implements the `Docs`
+- - [ ] Implements all `methods` of `Docs`
 - [ ] Implements the `Donut`
+- - [ ] Implements all `methods` of `Donut`
 - [ ] Implements the `DownloadedGames`
+- - [ ] Implements all `methods` of `DownloadedGame`
 - [ ] Implements the `Fave`
+- - [ ] Implements all `methods` of `Fave`
 - [ ] Implements the `Friends`
+- - [ ] Implements all `methods` of `Friends`
 - [ ] Implements the `Gifts`
+- - [ ] Implements all `methods` of `Gifts`
 - [ ] Implements the `LeadForms`
+- - [ ] Implements all `methods` of `LeadForms`
 - [ ] Implements the `Likes`
+- - [ ] Implements all `methods` of `Likes`
 - [ ] Implements the `Market`
+- - [ ] Implements all `methods` of `Market`
 - [ ] Implements the `Messages`
+- - [ ] Implements all `methods` of `Messages`
 - [ ] Implements the `Newsfeed`
+- - [ ] Implements all `methods` of `Newsfeed`
 - [ ] Implements the `Notes`
+- - [ ] Implements all `methods` of `Notes`
 - [ ] Implements the `Notifications`
+- - [ ] Implements all `methods` of `Notifications`
 - [ ] Implements the `Orders`
+- - [ ] Implements all `methods` of `Orders`
 - [ ] Implements the `Pages`
+- - [ ] Implements all `methods` of `Pages`
 - [ ] Implements the `Photos`
+- - [ ] Implements all `methods` of `Photos`
 - [ ] Implements the `Places`
+- - [ ] Implements all `methods` of `Places`
 - [ ] Implements the `Podcasts`
+- - [ ] Implements all `methods` of `Podcasts`
 - [ ] Implements the `Polls`
+- - [ ] Implements all `methods` of `Polls`
 - [ ] Implements the `PrettyCards`
+- - [ ] Implements all `methods` of `PrettyCards`
 - [ ] Implements the `Search`
+- - [ ] Implements all `methods` of `Search`
 - [ ] Implements the `Secure`
+- - [ ] Implements all `methods` of `Secure`
 - [ ] Implements the `Stats`
+- - [ ] Implements all `methods` of `Stats`
 - [ ] Implements the `Status`
+- - [ ] Implements all `methods` of `Status`
 - [ ] Implements the `Storage`
+- - [ ] Implements all `methods` of `Storage`
 - [ ] Implements the `Store`
+- - [ ] Implements all `methods` of `Store`
 - [ ] Implements the `Stories`
+- - [ ] Implements all `methods` of `Stories`
 - [ ] Implements the `Streaming`
+- - [ ] Implements all `methods` of `Streaming`
 - [ ] Implements the `Users`
+- - [ ] Implements all `methods` of `Users`
 - [ ] Implements the `Utils`
+- - [ ] Implements all `methods` of `Utils`
 - [ ] Implements the `Video`
+- - [ ] Implements all `methods` of `Video`
 - [ ] Implements the `Wall`
+- - [ ] Implements all `methods` of `Wall`
 - [ ] Implements the `Widgets`
+- - [ ] Implements all `methods` of `Widgets`
