@@ -1,3 +1,7 @@
+//! # Groups
+//! 
+//! Методы для работы с сообществами.
+
 mod methods;
 pub use methods::*;
 

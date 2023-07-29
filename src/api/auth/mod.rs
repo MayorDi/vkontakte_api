@@ -1,9 +1,16 @@
+//! # Auth
+//! 
+//! Методы для работы с авторизацией.
+
+
 use json::JsonValue;
 
 use super::account::get_result_responce;
 use super::Api;
 
 /// Позволяет восстановить доступ к аккаунту, используя код, полученный через SMS.
+/// 
+/// > Данный метод доступен только приложениям, имеющим доступ к [Прямой авторизации](https://dev.vk.com/ru/api/direct-auth).
 /// 
 /// > Этот метод можно вызвать с [ключом доступа пользователя](https://dev.vk.com/ru/api/access-token/getting-started#Ключ%20доступа%20пользователя).
 /// 
@@ -51,7 +58,7 @@ pub async fn restore(
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct OAuthParameters { 
     /// необходимо передать значение: restore_code;
     pub grant_type: String, 

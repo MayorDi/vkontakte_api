@@ -3,8 +3,8 @@
 Эта библиотека создана для личного, и не очень, использования.
 
 ## Goals
-- [x] Implements the `Account`
-- - [x] Implements all `methods` of `Account`
+- [x] ~~Implements the `Account`~~
+- - [x] ~~Implements all `methods` of `Account`~~
 
 - [ ] Implements the `Groups`
 - - [ ] Implements all `methods` of `Groups`
@@ -67,7 +67,7 @@
 - [ ] Implements the `AppWidgets`
 - [ ] Implements the `Apps`
 - [ ] Implements the `Asr`
-- [ ] Implements the `Auth`
+- [x] ~~Implements the `Auth`~~
 - [ ] Implements the `Board`
 - [ ] Implements the `Bugtracker`
 - [ ] Implements the `Calls`

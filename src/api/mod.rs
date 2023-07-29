@@ -1,6 +1,7 @@
 pub mod account;
 pub mod auth;
 pub mod groups;
+pub mod messages;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Api {
