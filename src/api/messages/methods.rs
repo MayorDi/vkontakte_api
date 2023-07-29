@@ -200,7 +200,34 @@ pub async fn search_dialogs() { unimplemented!() }
 ///   "response": 5
 /// }
 /// ```
-
+/// 
+/// # Error's Code
+/// 
+/// |Code   |Error                                                              |
+/// |-------|-------------------------------------------------------------------|
+/// |`104`  | Not found                                                         |
+/// |`900`  | Can't send messages for users from blacklist                      |
+/// |`901`  | Can't send messages for users without permission                  |
+/// |`902`  | Can't send messages to this user due to their privacy settings    |
+/// |`911`  | Keyboard format is invalid                                        |
+/// |`912`  | This is a chat bot feature, change this status in settings        |
+/// |`913`  | Too many forwarded messages                                       |
+/// |`914`  | Message is too long                                               |
+/// |`917`  | You don't have access to this chat                                |
+/// |`921`  | Can't forward these messages                                      |
+/// |`922`  | You left this chat                                                |
+/// |`925`  | You are not admin of this chat                                    |
+/// |`936`  | Contact not found                                                 |
+/// |`940`  | Too many posts in messages                                        |
+/// |`943`  | Cannot use this intent                                            |
+/// |`944`  | Limits overflow for this intent                                   |
+/// |`945`  | Chat was disabled                                                 |
+/// |`946`  | Chat not supported                                                |
+/// |`950`  | Can't send message, reply timed out                               |
+/// |`962`  | You can't access donut chat without subscription                  |
+/// |`969`  | Message cannot be forwarded                                       |
+/// |`979`  | App action is restricted for conversations with communities       |
+/// 
 pub async fn send(
     api: &Api,
     parameters: SendParameters,
