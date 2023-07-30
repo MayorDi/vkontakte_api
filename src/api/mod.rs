@@ -30,3 +30,18 @@ impl Api {
         self.version
     }
 }
+
+#[macro_export]
+macro_rules! create_query {
+    ($($KEY:tt : $VALUE:expr),*) => {
+        {
+            let mut query = String::new();
+
+            $(
+                query.push_str(format!("&{}={}", stringify!($KEY), stringify!($VALUE)).as_str());
+            )*
+
+            query
+        }
+    };
+}
