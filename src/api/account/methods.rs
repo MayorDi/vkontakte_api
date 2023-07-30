@@ -2,8 +2,6 @@ use json::JsonValue;
 
 use crate::api::Api;
 
-use super::User;
-
 /// Добавляет пользователя или группу в черный список.
 /// 
 /// # Arguments
@@ -32,43 +30,40 @@ pub async fn ban(api: &Api, owner_id: i64) -> Result<JsonValue, JsonValue> {
 /// Позволяет сменить пароль пользователя после успешного восстановления доступа к аккаунту через СМС,
 /// используя метод [`auth.restore`](https://dev.vk.com/ru/method/auth.restore).
 /// 
+/// 
 /// # Arguments
 /// 
 /// * `api` - ссылка на _Api_ объект из которого потом будет получен _access token_ и API _version_;
 /// * `new_password` - Новый пароль, который будет установлен в качестве текущего. Обязательный параметр Мин. длина = 6;
-/// ### Необязательные
 /// 
-/// * `restore_sid` - Идентификатор сессии, полученный при восстановлении доступа используя метод auth.restore. (В случае если пароль меняется сразу после восстановления доступа);
-/// * `change_password_hash` Хэш, полученный при успешной OAuth авторизации по коду полученному по СМС (В случае если пароль меняется сразу после восстановления доступа);
-/// * `old_password` - Текущий пароль пользователя.
+/// ### Необязательные
+/// * `restore_sid`: `String` - Идентификатор сессии, полученный при восстановлении доступа используя метод auth.restore. (В случае если пароль меняется сразу после восстановления доступа);
+/// * `change_password_hash`: `String` Хэш, полученный при успешной OAuth авторизации по коду полученному по СМС (В случае если пароль меняется сразу после восстановления доступа);
+/// * `old_password`: `String` - Текущий пароль пользователя.
+/// 
+/// 
+/// # Examples
+/// ``` rust
+/// change_password(&api, 123, create_query! {
+///     old_password: 321
+/// });
+/// ```
+/// 
+/// 
 /// # Return
 /// Возвращает объект с единственным полем `token`, содержащим новый токен.
 pub async fn change_password(
     api: &Api, 
     new_password: &str,
-    old_password: Option<&str>,
-    restore_sid: Option<&str>,
-    change_password_hash: Option<&str>,
+    query: String
 ) -> Result<JsonValue, JsonValue> {
 
-    let mut req = format!(
-        "https://api.vk.com/method/account.changePassword?access_token={}&new_password={}&v={}",
+    let req = format!(
+        "https://api.vk.com/method/account.changePassword?access_token={}&new_password={}&v={}{query}",
         api.get_access_token(),
         new_password,
         api.get_version()
     );
-
-    if let Some(old_password) = old_password {
-        req.push_str(format!("&old_password={}", old_password).as_str());
-    }
-
-    if let Some(restore_sid) = restore_sid {
-        req.push_str(format!("&restore_sid={}", restore_sid).as_str());
-    }
-
-    if let Some(change_password_hash) = change_password_hash {
-        req.push_str(format!("&change_password_hash={}", change_password_hash).as_str());
-    }
 
     get_result_responce(req).await
 }
@@ -76,6 +71,8 @@ pub async fn change_password(
 /// Возвращает список активных рекламных предложений (офферов), 
 /// выполнив которые, пользователь сможет получить соответствующее количество голосов 
 /// на свой счёт внутри приложения.
+/// 
+/// 
 /// # Arguments
 /// 
 /// * `api` - ссылка на _Api_ объект из которого потом будет получен _access token_ и API _version_;
@@ -84,32 +81,28 @@ pub async fn change_password(
 /// * `offset` - Смещение, необходимое для выборки определенного подмножества офферов;
 /// * `count` - Количество офферов, которое необходимо получить.
 /// 
+/// # Examples
+/// ``` rust
+/// get_active_offers(&api, create_query!{});
+/// ```
+/// 
+/// 
 /// # Return
 /// Возвращает массив, состоящий из общего количества старгетированных на текущего пользователя 
 /// специальных предложений (первый элемент), и списка объектов с информацией о предложениях. 
-/// <br>
-/// <br>
+/// 
 /// В случае, если на пользователя не старгетировано ни одного специального предложения, 
 /// массив будет содержать элемент `0` (количество специальных предложений).
 pub async fn get_active_offers(
     api: &Api,
-    offset: Option<usize>,
-    count: Option<usize>,
+    query: String,
 ) -> Result<JsonValue, JsonValue> {
 
-    let mut req = format!(
-        "https://api.vk.com/method/account.getActiveOffers?access_token={}&v={}",
+    let req = format!(
+        "https://api.vk.com/method/account.getActiveOffers?access_token={}&v={}{query}",
         api.get_access_token(),
         api.get_version()
     );
-
-    if let Some(offset) = offset {
-        req.push_str(format!("&offset={}", offset).as_str());
-    }
-
-    if let Some(count) = count {
-        req.push_str(format!("&restore_sid={}", count).as_str());
-    }
 
     get_result_responce(req).await
 }
@@ -341,87 +334,49 @@ pub async fn register_device(
 /// > Этот метод можно вызвать с ключом доступа пользователя, 
 ///   полученным в Standalone-приложении через [Implicit Flow](https://dev.vk.com/ru/api/access-token/implicit-flow-user)
 /// 
+/// 
 /// # Arguments
 /// 
 /// * `api` - ссылка на _Api_ объект из которого потом будет получен _access token_ и API _version_;
-/// * `user` - новые значения для старой информации.
+/// * `id`: `usize - обязательно
+/// * `first_name`: `String`
+/// * `last_name`: `String`
+/// * `maiden_name`: `String`
+/// * `screen_name`: `String`
+/// * `cancel_request_id`: `usize`
+/// * `sex`: `usize`
+/// * `relation`: `usize`
+/// * `relation_partner_id`: `i64`
+/// * `bdate`: `String`
+/// * `bdate_visibility`: `usize`
+/// * `home_town`: `String`
+/// * `country_id`: `usize`
+/// * `city_id`: `usize`
+/// * `status`: `usize`
+/// 
+/// 
+/// # Examples
+/// ``` rust
+/// save_profile_info(&api, create_query!{});
+/// ```
+/// 
 /// 
 /// # Return
 /// [DOC](https://dev.vk.com/ru/method/account.registerDevice)
-pub async fn save_profile_info(
-    api: &Api, 
-    user: &User,
-) -> Result<JsonValue, JsonValue> {
-
-    let mut req = format!(
-        "https://api.vk.com/method/account.saveProfileInfo?access_token={}&v={}",
+pub async fn save_profile_info(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
+    let req = format!(
+        "https://api.vk.com/method/account.saveProfileInfo?access_token={}&v={}{query}",
         api.get_access_token(),
         api.get_version()
     );
-
-    if let Some(first_name) = &user.first_name {
-        req.push_str(format!("&first_name={}", first_name).as_str());
-    }
     
-    if let Some(last_name) = &user.last_name {
-        req.push_str(format!("&last_name={}", last_name).as_str());
-    }
-    
-    if let Some(maiden_name) = &user.maiden_name {
-        req.push_str(format!("&maiden_name={}", maiden_name).as_str());
-    }
-    
-    if let Some(screen_name) = &user.screen_name {
-        req.push_str(format!("&screen_name={}", screen_name).as_str());
-    }
-    
-    if let Some(cancel_request_id) = &user.cancel_request_id {
-        req.push_str(format!("&cancel_request_id={}", cancel_request_id).as_str());
-    }
-    
-    if let Some(sex) = &user.sex {
-        req.push_str(format!("&sex={}", sex).as_str());
-    }
-    
-    if let Some(relation) = &user.relation {
-        req.push_str(format!("&relation={}", relation).as_str());
-    }
-    
-    if let Some(relation_partner_id) = &user.relation_partner_id {
-        req.push_str(format!("&relation_partner_id={}", relation_partner_id).as_str());
-    }
-    
-    if let Some(bdate) = &user.bdate {
-        req.push_str(format!("&bdate={}", bdate).as_str());
-    }
-    
-    if let Some(bdate_visibility) = &user.bdate_visibility {
-        req.push_str(format!("&bdate_visibility={}", bdate_visibility).as_str());
-    }
-    
-    if let Some(home_town) = &user.home_town {
-        req.push_str(format!("&home_town={}", home_town).as_str());
-    }
-    
-    if let Some(country_id) = &user.country_id {
-        req.push_str(format!("&country_id={}", country_id).as_str());
-    }
-    
-    if let Some(city_id) = &user.city_id {
-        req.push_str(format!("&city_id={}", city_id).as_str());
-    }
-    
-    if let Some(status) = &user.status {
-        req.push_str(format!("&status={}", status).as_str());
-    }
-    
-
     get_result_responce(req).await
 }
 
 /// Позволяет редактировать информацию о текущем аккаунте.
 /// > Этот метод можно вызвать с ключом доступа пользователя, 
 ///   полученным в Standalone-приложении через [Implicit Flow](https://dev.vk.com/ru/api/access-token/implicit-flow-user)
+/// 
 /// 
 /// # Arguments
 /// 
@@ -433,41 +388,21 @@ pub async fn save_profile_info(
 /// * `name` - Имя настройки
 /// * `value` - Значение настройки
 /// 
+/// 
+/// # Examples
+/// ``` rust
+/// set_info(&api, create_query!{});
+/// ```
+/// 
+/// 
 /// # Return
 /// В результате успешного выполнения возвращает `1`.
-pub async fn set_info(
-    api: &Api,
-    intro: Option<usize>,
-    own_posts_default: Option<u8>,
-    no_wall_replies: Option<u8>,
-    name: Option<String>,
-    value: Option<String>,
-) -> Result<JsonValue, JsonValue> {
-    let mut req = format!(
-        "https://api.vk.com/method/account.setInfo?access_token={}&v={}",
+pub async fn set_info(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
+    let req = format!(
+        "https://api.vk.com/method/account.setInfo?access_token={}&v={}{query}",
         api.get_access_token(),
         api.get_version()
     );
-
-    if let Some(intro) = intro {
-        req.push_str(format!("&intro={}", intro).as_str());
-    }
-
-    if let Some(own_posts_default) = own_posts_default {
-        req.push_str(format!("&own_posts_default={}", own_posts_default).as_str());
-    }
-
-    if let Some(no_wall_replies) = no_wall_replies {
-        req.push_str(format!("&no_wall_replies={}", no_wall_replies).as_str());
-    }
-
-    if let Some(name) = name {
-        req.push_str(format!("&name={}", name).as_str());
-    }
-
-    if let Some(value) = value {
-        req.push_str(format!("&value={}", value).as_str());
-    }
 
     get_result_responce(req).await
 }
@@ -520,6 +455,7 @@ pub async fn set_online(api: &Api) -> Result<JsonValue, JsonValue> {
 /// > Этот метод можно вызвать с ключом доступа пользователя, 
 ///   полученным в Standalone-приложении через [Implicit Flow](https://dev.vk.com/ru/api/access-token/implicit-flow-user)
 /// 
+/// 
 /// # Arguments
 /// 
 /// * `api` - ссылка на _Api_ объект из которого потом будет получен _access token_ и API _version_;
@@ -528,38 +464,21 @@ pub async fn set_online(api: &Api) -> Result<JsonValue, JsonValue> {
 /// * `key` - Ключ уведомления;
 /// * `value` - Новое значение уведомления в [специальном формате](https://dev.vk.com/ru/reference/objects/push-settings).
 /// 
+/// 
+/// # Examples
+/// ``` rust
+/// set_push_settings(&api, create_query!{});
+/// ```
+/// 
+/// 
 /// # Return
 /// После успешного выполнения возвращает 1.
-pub async fn set_push_settings(
-    api: &Api, 
-    device_id: Option<String>,
-    settings: Option<String>,
-    key: Option<String>,
-    value: Option<String>,
-) -> Result<JsonValue, JsonValue> {
-
-    let mut req = format!(
-        "https://api.vk.com/method/account.setPushSettings?access_token={}&v={}",
+pub async fn set_push_settings(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
+    let req = format!(
+        "https://api.vk.com/method/account.setPushSettings?access_token={}&v={}{query}",
         api.get_access_token(),
         api.get_version()
     );
-
-    if let Some(device_id) = device_id {
-        req.push_str(format!("&device_id={}", device_id).as_str());
-    }
-
-    if let Some(settings) = settings {
-        req.push_str(format!("&settings={}", settings).as_str());
-    }
-
-    if let Some(key) = key {
-        req.push_str(format!("&key={}", key).as_str());
-    }
-
-    if let Some(value) = value {
-        req.push_str(format!("&value={}", value).as_str());
-    }
-
 
     get_result_responce(req).await
 }
@@ -568,6 +487,7 @@ pub async fn set_push_settings(
 /// 
 /// > Этот метод можно вызвать с ключом доступа пользователя, 
 ///   полученным в Standalone-приложении через [Implicit Flow](https://dev.vk.com/ru/api/access-token/implicit-flow-user)
+/// 
 /// 
 /// # Arguments
 /// 
@@ -585,54 +505,21 @@ pub async fn set_push_settings(
 ///     `0` — отключить звук (параметр работает, только если в `peer_id` передан идентификатор 
 ///         групповой беседы или пользователя).
 /// 
+/// 
+/// # Examples
+/// ``` rust
+/// set_silence_mode(&api, create_query!{});
+/// ```
+/// 
+/// 
 /// # Return
 /// После успешного выполнения возвращает 1.
-pub async fn set_silence_mode(
-    api: &Api,
-    token: Option<String>,
-    device_id: Option<String>,
-    time: Option<i64>,
-    chat_id: Option<i64>,
-    user_id: Option<i64>,
-    peer_id: Option<i64>,
-    sound: Option<i64>,
-) -> Result<JsonValue, JsonValue> {
-
-    let mut req = format!(
-        "https://api.vk.com/method/account.setSilenceMode?access_token={}&v={}",
+pub async fn set_silence_mode(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
+    let req = format!(
+        "https://api.vk.com/method/account.setSilenceMode?access_token={}&v={}{query}",
         api.get_access_token(),
         api.get_version()
     );
-
-    if let Some(token) = token {
-        req.push_str(format!("&token={}", token).as_str());
-    }
-
-    if let Some(device_id) = device_id {
-        req.push_str(format!("&device_id={}", device_id).as_str());
-    }
-
-    if let Some(time) = time {
-        req.push_str(format!("&time={}", time).as_str());
-    }
-
-    if let Some(chat_id) = chat_id {
-        req.push_str(format!("&chat_id={}", chat_id).as_str());
-    }
-
-    if let Some(user_id) = user_id {
-        req.push_str(format!("&user_id={}", user_id).as_str());
-    }
-
-    if let Some(peer_id) = peer_id {
-        req.push_str(format!("&peer_id={}", peer_id).as_str());
-    }
-
-    if let Some(sound) = sound {
-        req.push_str(format!("&sound={}", sound).as_str());
-    }
-
-
 
     get_result_responce(req).await
 }
@@ -662,6 +549,7 @@ pub async fn unban(api: &Api, owner_id: i64) -> Result<JsonValue, JsonValue> {
 /// > Этот метод можно вызвать с ключом доступа пользователя, 
 ///   полученным в Standalone-приложении через [Implicit Flow](https://dev.vk.com/ru/api/access-token/implicit-flow-user)
 /// 
+/// 
 /// # Arguments
 /// 
 /// * `api` - ссылка на _Api_ объект из которого потом будет получен _access token_ и API _version_;
@@ -671,31 +559,21 @@ pub async fn unban(api: &Api, owner_id: i64) -> Result<JsonValue, JsonValue> {
 /// * * 1 — отписать устройство, использующего sandbox сервер для отправки push-уведомлений;
 /// * * 0 — отписать устройство, не использующее sandbox сервер.
 /// 
+/// 
+/// # Examples
+/// ``` rust
+/// unregister_device(&api, create_query!{});
+/// ```
+/// 
+/// 
 /// # Return
 /// После успешного выполнения возвращает 1. 
-pub async fn unregister_device(
-    api: &Api,
-    token: Option<String>,
-    device: Option<String>,
-    sandbox: Option<u8>,
-) -> Result<JsonValue, JsonValue> { 
-    let mut req = format!(
-        "https://api.vk.com/method/account.unban?access_token={}&v={}",
+pub async fn unregister_device(api: &Api, query: String) -> Result<JsonValue, JsonValue> { 
+    let req = format!(
+        "https://api.vk.com/method/account.unban?access_token={}&v={}{query}",
         api.get_access_token(),
         api.get_version()
     );
-
-    if let Some(token) = token {
-        req.push_str(format!("&token={}", token).as_str());
-    }
-
-    if let Some(device) = device {
-        req.push_str(format!("&device={}", device).as_str());
-    }
-
-    if let Some(sandbox) = sandbox {
-        req.push_str(format!("&sandbox={}", sandbox).as_str());
-    }
 
 
     get_result_responce(req).await

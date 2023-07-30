@@ -33,6 +33,7 @@ impl Api {
 
 #[macro_export]
 macro_rules! create_query {
+    {} => { "" };
     ($($KEY:tt : $VALUE:expr),*) => {
         {
             let mut query = String::new();
