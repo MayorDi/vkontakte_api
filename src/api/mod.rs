@@ -1,3 +1,7 @@
+use json::JsonValue;
+
+use self::account::get_result_responce;
+
 pub mod account;
 pub mod auth;
 pub mod groups;
@@ -29,6 +33,16 @@ impl Api {
     pub fn get_version(&self) -> &str {
         self.version
     }
+}
+
+pub async fn create_request(method: &str, api: &Api, query: String) -> Result<JsonValue, JsonValue> {
+    let req = format!(
+        "https://api.vk.com/method/{method}?access_token={}&v={}{query}",
+        api.get_access_token(),
+        api.get_version()
+    );
+
+    get_result_responce(req).await
 }
 
 #[macro_export]
