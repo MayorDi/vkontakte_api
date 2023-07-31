@@ -39,7 +39,7 @@ macro_rules! create_query {
             let mut query = String::new();
 
             $(
-                query.push_str(format!("&{}={}", stringify!($KEY), stringify!($VALUE)).as_str());
+                query.push_str(format!("&{}={}", stringify!($KEY), $VALUE).as_str());
             )*
 
             query

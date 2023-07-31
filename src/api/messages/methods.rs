@@ -165,10 +165,7 @@ pub async fn deny_messages_from_group() { unimplemented!() }
 /// |`949`  | Can't send message, reply timed out                               |
 /// 
 /// В ходе выполнения могут произойти [общие ошибки](https://dev.vk.com/ru/reference/errors).
-pub async fn edit(
-    api: &Api,
-    query: String,
-) -> Result<JsonValue, JsonValue> {
+pub async fn edit(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
     let req = format!(
         "https://api.vk.com/method/messages.edit?access_token={}&v={}{query}",
         api.get_access_token(),
@@ -192,7 +189,44 @@ pub async fn get() { unimplemented!() }
 pub async fn get_by_conversation_message_id() { unimplemented!() }
 
 /// Возвращает сообщения по их идентификаторам.
-pub async fn get_by_id() { unimplemented!() }
+/// 
+/// > Этот метод можно вызвать с ключом доступа пользователя, 
+/// полученным в Standalone-приложении через 
+/// [Implicit Flow](https://dev.vk.com/ru/api/access-token/implicit-flow-user).
+/// Требуются 
+/// [права доступа](https://dev.vk.com/ru/reference/access-rights): `messages`.
+/// 
+/// > Этот метод можно вызвать с 
+/// [ключом доступа сообщества](https://dev.vk.com/ru/api/access-token/getting-started#Ключ%20доступа%20сообщества).
+/// Требуются [права доступа](https://dev.vk.com/ru/reference/access-rights): `messages`.
+/// 
+/// 
+/// # Arguments
+/// 
+/// * `api`
+/// * `message_ids`: `String` - Идентификаторы сообщений. Максимум 100 идентификаторов.
+/// * `preview_length`: `usize` - Количество символов, по которому нужно обрезать сообщение. 
+/// Укажите `0`, если вы не хотите обрезать сообщение (по умолчанию сообщения не обрезаются).
+/// * `extended`: `u8` - `1` — возвращать дополнительные поля.
+/// * `fields`: `String` - Список дополнительных полей для пользователей и сообществ.
+/// * `group_id`: `i64` - Идентификатор сообщества (для сообщений сообщества с ключом доступа пользователя).
+/// * `cmids`: `String`
+/// * `peer_id`: `i64`
+/// 
+/// 
+/// # Return
+/// После успешного выполнения возвращает объект, содержащий число результатов в 
+/// поле `count` и массив объектов, описывающих сообщения, в поле `items`.
+pub async fn get_by_id(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
+    let req = format!(
+        "https://api.vk.com/method/messages.getById?access_token={}&v={}{query}",
+        api.get_access_token(),
+        api.get_version()
+    );
+    
+    
+    get_result_responce(req).await
+}
 
 /// Возвращает информацию о беседе.
 pub async fn get_chat() { unimplemented!() }
@@ -217,7 +251,74 @@ pub async fn get_conversations_by_id() { unimplemented!() }
 pub async fn get_dialogs() { unimplemented!() }
 
 /// Возвращает историю сообщений для указанного диалога.
-pub async fn get_history() { unimplemented!() }
+/// 
+/// > Этот метод можно вызвать с ключом доступа пользователя, 
+/// полученным в Standalone-приложении через 
+/// [Implicit Flow](https://dev.vk.com/ru/api/access-token/implicit-flow-user).
+/// Требуются 
+/// [права доступа](https://dev.vk.com/ru/reference/access-rights): `messages`.
+/// 
+/// > Этот метод можно вызвать с 
+/// [ключом доступа сообщества](https://dev.vk.com/ru/api/access-token/getting-started#Ключ%20доступа%20сообщества).
+/// Требуются [права доступа](https://dev.vk.com/ru/reference/access-rights): `messages`.
+/// 
+/// 
+/// # Arguments
+/// 
+/// * `offset`: `i64` Смещение, необходимое для выборки определённого подмножества сообщений, 
+/// должен быть `>= 0`, если не передан параметр `start_message_id`, и должен быть `<= 0`, если передан.
+/// count: usize Количество сообщений, которое необходимо получить (но не более `200`).
+/// * `user_id`: `String` Идентификатор пользователя, историю переписки с которым необходимо вернуть.
+/// * `peer_id`: `i64` - Идентификатор назначения.
+/// Для пользователя:
+/// * `id` пользователя.
+/// Для групповой беседы:
+/// * `2000000000` + `id` беседы (недоступно для вызовов от имени сообщества).
+/// Для сообщества:
+/// *`-id` сообщества.
+/// 
+/// * `start_message_id`: `i64` Если значение `> 0`, то это идентификатор сообщения, 
+/// начиная с которого нужно вернуть историю переписки, если передано передано значение `-1`, 
+/// то к значению параметра `offset` прибавляется количество входящих непрочитанных сообщений в конце диалога 
+/// (подробности смотрите ниже).
+/// * `rev`: `i64` `1` — возвращать сообщения в хронологическом порядке. 
+/// `0` — возвращать сообщения в обратном хронологическом порядке (по умолчанию).
+/// * `extended`: `u8` Если указать в качестве этого параметра `1`, 
+/// то будет возвращена информация о пользователях, являющихся авторами сообщений. По умолчанию `0`.
+/// * `fields`: `String` Список дополнительных полей профилей, которые необходимо вернуть. Смотрите подробное описание.
+/// * `group_id`: `i64` Идентификатор сообщества (для сообщений сообщества с ключом доступа пользователя).
+/// 
+/// Параметр `start_message_id` вместе с `offset <=0` и `count >0` позволяет получить интервал истории 
+/// сообщений вокруг данного сообщения или вокруг начала отрезка непрочитанных входящих сообщений.
+/// 
+/// Для `start_message_id>=0` и к значению параметра `offset` прибавляется количество сообщений, 
+/// чей идентификатор строго больше данного `start_message_id` (при `offset` равном `0` вернутся сообщения начиная 
+/// с данного включительно и более старые, `count` штук).
+/// 
+/// Для `start_message_id=-1` поведение такое же, как при `start_message_id` 
+/// равном последнему сообщению в истории переписки, 
+/// не являющемуся входящим непрочитанным (при отсутствии входящих непрочитанных в этом диалоге это совпадает 
+/// с отсутствием параметра `start_message_id`), то есть к значению `offset` прибавляется количество 
+/// входящих непрочитанных сообщений в конце истории.
+/// 
+/// # Return
+/// 
+/// После успешного выполнения возвращает список объектов [сообщений](https://dev.vk.com/ru/reference/objects/message).
+/// 
+/// При переданном `start_message_id` в случае, если не было возвращено последнее сообщение в истории переписки 
+/// (то есть сколько-то сообщений было пропущено), количество пропущенных сообщений (то есть реальное значение `offset`,
+/// которое использовалось для получения интервала истории) 
+/// будет возвращено в поле `skipped` (вместе с `count` и `items`).
+pub async fn get_history(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
+    let req = format!(
+        "https://api.vk.com/method/messages.getHistory?access_token={}&v={}{query}",
+        api.get_access_token(),
+        api.get_version()
+    );
+    
+    
+    get_result_responce(req).await
+}
 
 /// Возвращает материалы диалога или беседы.
 pub async fn get_history_attachments() { unimplemented!() }
@@ -397,10 +498,7 @@ pub async fn get_last_activity() { unimplemented!() }
 /// |`927`  |Chat does not exist                                |
 /// 
 /// В ходе выполнения могут произойти [общие ошибки](https://dev.vk.com/ru/reference/errors).
-pub async fn get_long_poll_history(
-    api: &Api,
-    query: String,
-) -> Result<JsonValue, JsonValue> {
+pub async fn get_long_poll_history(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
     let req = format!(
         "https://api.vk.com/method/messages.getLongPollHistory?access_token={}&v={}{query}",
         api.get_access_token(),
@@ -413,7 +511,41 @@ pub async fn get_long_poll_history(
 
 /// Возвращает данные, необходимые для 
 /// [подключения к Long Poll серверу](https://dev.vk.com/ru/api/user-long-poll/getting-started).
-pub async fn get_long_poll_server() { unimplemented!() }
+/// 
+/// > Этот метод можно вызвать с ключом доступа пользователя, 
+/// полученным в Standalone-приложении через 
+/// [Implicit Flow](https://dev.vk.com/ru/api/access-token/implicit-flow-user).
+/// Требуются 
+/// [права доступа](https://dev.vk.com/ru/reference/access-rights): `messages`.
+/// 
+/// > Этот метод можно вызвать с 
+/// [ключом доступа сообщества](https://dev.vk.com/ru/api/access-token/getting-started#Ключ%20доступа%20сообщества).
+/// Требуются [права доступа](https://dev.vk.com/ru/reference/access-rights): `messages`.
+/// 
+/// 
+/// # Arguments
+/// 
+/// * `need_pts` - 1 — возвращать поле pts, необходимое для работы метода messages.getLongPollHistory
+/// * `group_id` - Идентификатор сообщества (для сообщений сообщества с ключом доступа пользователя).
+/// * `lp_version` - Версия для подключения к Long Poll. Актуальная версия: 3. 
+/// Подробную информацию об изменениях в версиях Вы найдёте на этой странице.
+/// 
+/// 
+/// # Return
+/// Возвращает объект, который содержит поля `key`, server, `ts`. Используя эти данные, 
+/// Вы можете подключиться к серверу быстрых сообщений 
+/// для мгновенного получения приходящих сообщений и других событий.
+/// [Формат взаимодействия с `LongPoll` сервером](https://dev.vk.com/ru/api/user-long-poll/getting-started).
+pub async fn get_long_poll_server(api: &Api, query: String) -> Result<JsonValue, JsonValue> {
+    let req = format!(
+        "https://api.vk.com/method/messages.getLongPollServer?access_token={}&v={}{query}",
+        api.get_access_token(),
+        api.get_version()
+    );
+    
+    
+    get_result_responce(req).await
+}
 
 /// Получить актуальные счётчики реакций на сообщения
 pub async fn get_messages_reactions() { unimplemented!() }
@@ -639,11 +771,10 @@ pub async fn search_dialogs() { unimplemented!() }
 /// В ходе выполнения могут произойти [общие ошибки](https://dev.vk.com/ru/reference/errors).
 pub async fn send(
     api: &Api,
-    user_id: usize,
     query: String,
 ) -> Result<JsonValue, JsonValue> {
     let req = format!(
-        "https://api.vk.com/method/messages.send?access_token={}&v={}&user_id={user_id}{query}",
+        "https://api.vk.com/method/messages.send?access_token={}&v={}{query}",
         api.get_access_token(),
         api.get_version()
     );
